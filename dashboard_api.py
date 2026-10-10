@@ -72,7 +72,7 @@ class Handler(BaseHTTPRequestHandler):
         if urlparse(self.path).path != "/api/status":
             self.send_json(404, {"error": "Not found"})
             return
-        reports = sorted(REPORTS.glob("*.json"), reverse=True) if REPORTS.exists() else []
+        reports = sorted(REPORTS.glob("*.json"), key=lambda path: path.stat().st_mtime, reverse=True) if REPORTS.exists() else []
         if not reports:
             self.send_json(200, {"status": "NO_REPORT", "folder": str(TARGET), "message": "Run a scan to create the first report."})
             return
