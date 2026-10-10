@@ -21,14 +21,13 @@ class DashboardApiTests(unittest.TestCase):
             self.assertIn("message", report)
 
     def test_scan_now_includes_anomaly_analysis_and_persists_report(self):
-        with tempfile.TemporaryDirectory() as tmp:
+        with tempfile.TemporaryDirectory() as tmp, tempfile.TemporaryDirectory() as state_tmp:
             root = Path(tmp)
             (root / "normal.txt").write_text("normal")
             (root / "backdoor_payload.sh").write_text("review")
-            state = root / "state"
+            state = Path(state_tmp)
             baseline_path = state / "baseline.json"
             reports_path = state / "reports"
-            state.mkdir()
             # Keep a clean reference entry; the added suspicious path should be surfaced.
             baseline_path.write_text(json.dumps({
                 "root": str(root),
