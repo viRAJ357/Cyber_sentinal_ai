@@ -9,7 +9,8 @@ A defensive cybersecurity learning project for Termux and Python. It checks file
 - Basic Termux security audit and SSH permission checks (`sentinel.py`)
 - SHA-256 file integrity baseline and comparison (`integrity.py`)
 - JSON scan reports stored under `~/.cyber-sentinel-ai/reports/`
-- Polling monitor with console alerts and HTTPS-only optional webhook notifications (`monitor.py`)\n- Explainable anomaly triage: Isolation Forest when optional scikit-learn is installed, otherwise a transparent heuristic fallback (`anomaly_detection.py`)
+- Polling monitor with console alerts and HTTPS-only optional webhook notifications (`monitor.py`)
+- Explainable anomaly triage: Isolation Forest when optional scikit-learn is installed, otherwise a transparent heuristic fallback (`anomaly_detection.py`)
 - Local dashboard API for on-demand scans and latest report (`dashboard_api.py`)
 - Unit tests and GitHub Actions CI
 
@@ -56,7 +57,17 @@ Use `--once` to run a single monitor check and return the same exit codes:
 python monitor.py ~/cyber-sentinel-ai --once
 ```
 
-## Optional machine-learning dependency\n\nFor Isolation Forest-based anomaly triage, install the optional dependency in a virtual environment:\n\n```sh\npython -m pip install -r requirements-ml.txt\n```\n\nWithout it, the monitor uses the explainable heuristic fallback. Install dependencies only from sources you trust.\n\n## Dashboard API (local development)
+## Optional machine-learning dependency
+
+For Isolation Forest-based anomaly triage, install the optional dependency in a virtual environment:
+
+```sh
+python -m pip install -r requirements-ml.txt
+```
+
+Without it, the monitor uses the explainable heuristic fallback. Install dependencies only from sources you trust.
+
+## Dashboard API (local development)
 
 Set up a baseline first. Start the API in Termux:
 
