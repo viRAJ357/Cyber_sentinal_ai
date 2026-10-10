@@ -79,7 +79,7 @@ For Isolation Forest-based anomaly triage, install the optional dependency in a 
 python -m pip install -r requirements-ml.txt
 ```
 
-Without it, the monitor uses the explainable heuristic fallback. Install dependencies only from sources you trust.
+Without it, the monitor uses the explainable heuristic fallback. Some Termux/Android environments may not have compatible scikit-learn wheels; if installation fails, keep using the fallback or run the optional model on a supported desktop/Linux Python environment. Install dependencies only from sources you trust.
 
 ## Dashboard API (local development)
 
