@@ -51,8 +51,12 @@ def _file_size(root, name):
         return 0
 
 
-def score_events(root, baseline_files, current_files, changes):
-    """Return explainable anomaly findings for added/changed/missing paths."""
+def score_events(root, baseline_files, current_files, changes, *, use_ml=True):
+    """Return explainable anomaly findings for added/changed/missing paths.
+
+    Set use_ml=False to force the deterministic heuristic path for evaluation
+    and environments where scikit-learn is unavailable.
+    """
     root = Path(root).resolve()
     affected = set(changes.get("added", [])) | set(changes.get("changed", [])) | set(changes.get("missing", []))
     reference_names = sorted(set(baseline_files) & set(current_files) - affected)
@@ -72,7 +76,7 @@ def score_events(root, baseline_files, current_files, changes):
     engine = "heuristic_fallback"
     predictions = [False] * len(event_names)
     scores = [0.0] * len(event_names)
-    if len(reference_features) >= MIN_TRAINING_FILES and event_features:
+    if use_ml and len(reference_features) >= MIN_TRAINING_FILES and event_features:
         try:
             from sklearn.ensemble import IsolationForest
             model = IsolationForest(n_estimators=100, contamination="auto", random_state=42)
