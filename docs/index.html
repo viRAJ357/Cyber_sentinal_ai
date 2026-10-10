@@ -29,7 +29,7 @@ footer{text-align:center;padding:24px;border-top:1px solid var(--line);color:#81
 <main>
 <div class="eyebrow">DEFENSIVE CYBERSECURITY · SHA-256</div>
 <h1>File integrity monitor<span class="green">.</span></h1>
-<p>Compare files with a trusted baseline, detect unexpected additions, modifications or deletions, and review JSON scan reports.</p>
+<p>Compare files with a trusted baseline, detect unexpected additions, modifications or deletions, and review explainable anomaly-triage findings from the backend.</p>
 <section class="panel">
 <h2>Connect to your API</h2>
 <p class="note">This GitHub Pages site is static. Live scans work only when you connect a separately hosted, secured HTTPS API. A Termux API at 127.0.0.1 is private to the device running it and cannot be reached by this public website.</p>
@@ -42,7 +42,7 @@ footer{text-align:center;padding:24px;border-top:1px solid var(--line);color:#81
 <div class="card"><div class="label">Scan Status</div><div class="value amber" id="status">DISCONNECTED</div><div class="label" id="timestamp">No live report loaded</div></div>
 <div class="card"><div class="label">Files Added</div><div class="value" id="added">—</div></div>
 <div class="card"><div class="label">Files Changed</div><div class="value" id="changed">—</div></div>
-<div class="card"><div class="label">Files Missing</div><div class="value" id="missing">—</div></div>
+<div class="card"><div class="label">Files Missing</div><div class="value" id="missing">—</div></div>\n<div class="card"><div class="label">AI Anomalies</div><div class="value" id="anomalies">—</div><div class="label" id="aiEngine">No model result</div></div>
 </section>
 <section class="panel">
 <h2>Latest scan details</h2><p id="reportSummary">Connect a secured backend to display real report data. No sample findings are presented as real.</p>
@@ -67,10 +67,10 @@ function showReport(data){
  el("status").className="value "+(data.status==="CLEAN"?"green":data.status==="CHANGES_DETECTED"||data.status==="INCOMPLETE"?"amber":"red");
  el("timestamp").textContent=data.timestamp||"No timestamp";
  const s=data.summary||{};
- el("added").textContent=s.added??"—";el("changed").textContent=s.changed??"—";el("missing").textContent=s.missing??"—";
+ el("added").textContent=s.added??"—";el("changed").textContent=s.changed??"—";el("missing").textContent=s.missing??"—";\n const ai=data.anomaly_detection||{};el("anomalies").textContent=ai.anomaly_count??"—";el("aiEngine").textContent=ai.engine||"No model result";
  el("reportSummary").textContent=data.message||("Folder: "+(data.folder||"unknown")+" · Scan errors: "+(s.scan_errors??(data.scan_errors||[]).length));
  const rows=[];
- for(const type of ["added","changed","missing"]){for(const file of (data[type]||[])){rows.push([type.toUpperCase(),file]);}}
+ for(const type of ["added","changed","missing"]){for(const file of (data[type]||[])){rows.push([type.toUpperCase(),file]);}}\n for(const finding of (ai.findings||[])){if(finding.anomaly){rows.push(["AI TRIAGE",finding.path+" — score "+finding.score+" — "+(finding.reasons||[]).join(", ")]);}}
  el("fileRows").replaceChildren();
  if(!rows.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=2;td.textContent="No file changes listed.";tr.append(td);el("fileRows").append(tr);}
  for(const [type,file] of rows){const tr=document.createElement("tr"),a=document.createElement("td"),b=document.createElement("td");a.textContent=type;b.textContent=file;tr.append(a,b);el("fileRows").append(tr);}
