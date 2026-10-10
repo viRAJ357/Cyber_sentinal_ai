@@ -7,7 +7,7 @@ A defensive cybersecurity learning project for Termux and Python. It checks file
 ## Features
 
 - Basic Termux security audit and SSH permission checks (`sentinel.py`)
-- SHA-256 file integrity baseline and comparison (`integrity.py`)
+- SHA-256 file integrity baseline and comparison (`integrity.py`), with optional HMAC-SHA256 baseline signing
 - JSON scan reports stored under `~/.cyber-sentinel-ai/reports/`
 - Polling monitor with console alerts and HTTPS-only optional webhook notifications (`monitor.py`)
 - Explainable anomaly triage: Isolation Forest when optional scikit-learn is installed, otherwise a transparent heuristic fallback (`anomaly_detection.py`)
@@ -56,6 +56,20 @@ Use `--once` to run a single monitor check and return the same exit codes:
 ```sh
 python monitor.py ~/cyber-sentinel-ai --once
 ```
+
+## Optional signed baseline
+
+For tamper-evident baseline verification, configure a secret key **before creating the baseline**. Keep the key separate from the baseline and do not commit it:
+
+```sh
+mkdir -p "$HOME/.config/cyber-sentinel"
+chmod 700 "$HOME/.config/cyber-sentinel"
+python -c 'import secrets; print(secrets.token_hex(32))' > "$HOME/.config/cyber-sentinel/baseline.key"
+chmod 600 "$HOME/.config/cyber-sentinel/baseline.key"
+export CYBER_SENTINEL_BASELINE_KEY="$(cat "$HOME/.config/cyber-sentinel/baseline.key")"
+```
+
+Then create the baseline from a known-good folder. The same key must be loaded in every shell where checks, monitoring, or the dashboard API run. If you enable signing for an existing unsigned baseline, first back it up and deliberately recreate it from a trusted state; do not delete a baseline just to silence a verification error. A signed baseline will be rejected if its key is missing or its signature is invalid. Keep a backup of the key outside the monitored device where practical: a compromise of the same user account may expose both baseline and key.
 
 ## Optional machine-learning dependency
 
