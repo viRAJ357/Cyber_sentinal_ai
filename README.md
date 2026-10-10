@@ -122,6 +122,16 @@ python -m pip install -r requirements-ml.txt
 
 On Termux/Android, scikit-learn may not have compatible wheels for every Python version. If installation fails, use the fallback or run the optional model on a supported desktop/Linux environment. The model is a triage aid, not a trained malware classifier; scores can produce false positives and must be reviewed.
 
+### Synthetic ML smoke test
+
+A synthetic smoke test was run in Google Colab and reported:
+
+- Engine: `isolation_forest`
+- Reference files: `12`
+- Test input: synthetic file inventory and one synthetic added-file event
+
+This confirms that the optional Isolation Forest code path executed for that test environment. It does **not** establish real-world malware-detection accuracy, recall, precision, or a production-ready model. Termux may use the heuristic fallback if scikit-learn is unavailable.
+
 ## Local dashboard API
 
 In the project folder, set the target and start the API:
