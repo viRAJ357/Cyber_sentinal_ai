@@ -15,14 +15,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Check Python syntax
-        run: python -m py_compile integrity.py sentinel.py
-
+        run: python -m py_compile integrity.py sentinel.py monitor.py dashboard_api.py
       - name: Run automated tests
         run: python -m unittest discover -s tests -v
