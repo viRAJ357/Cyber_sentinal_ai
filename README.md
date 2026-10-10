@@ -9,7 +9,7 @@ A defensive cybersecurity learning project for Termux and Python. It checks file
 - Basic Termux security audit and SSH permission checks (`sentinel.py`)
 - SHA-256 file integrity baseline and comparison (`integrity.py`)
 - JSON scan reports stored under `~/.cyber-sentinel-ai/reports/`
-- Polling monitor with console alerts and optional webhook notifications (`monitor.py`)
+- Polling monitor with console alerts and HTTPS-only optional webhook notifications (`monitor.py`)\n- Explainable anomaly triage: Isolation Forest when optional scikit-learn is installed, otherwise a transparent heuristic fallback (`anomaly_detection.py`)
 - Local dashboard API for on-demand scans and latest report (`dashboard_api.py`)
 - Unit tests and GitHub Actions CI
 
@@ -41,9 +41,9 @@ Exit codes: `0` = clean, `1` = changes detected, `2` = operational error/incompl
 python monitor.py ~/cyber-sentinel-ai --interval 10
 ```
 
-The monitor checks every 10 seconds and prints an alert when it detects a change from the baseline. It does not automatically update the baseline.
+The monitor checks every 10 seconds and prints an alert when it detects a change from the baseline. It does not automatically update the baseline. The anomaly triage ranks changed paths using file/path metadata; it is not a malware classifier and can produce false positives. The core tool works without scikit-learn.
 
-Optional webhook (use only a webhook endpoint you control; keep the URL private):
+Optional webhook (must be HTTPS; use only an endpoint you control and keep the URL private):
 
 ```sh
 export CYBER_SENTINEL_WEBHOOK_URL="https://your-approved-webhook.example/endpoint"
@@ -56,7 +56,7 @@ Use `--once` to run a single monitor check and return the same exit codes:
 python monitor.py ~/cyber-sentinel-ai --once
 ```
 
-## Dashboard API (local development)
+## Optional machine-learning dependency\n\nFor Isolation Forest-based anomaly triage, install the optional dependency in a virtual environment:\n\n```sh\npython -m pip install -r requirements-ml.txt\n```\n\nWithout it, the monitor uses the explainable heuristic fallback. Install dependencies only from sources you trust.\n\n## Dashboard API (local development)
 
 Set up a baseline first. Start the API in Termux:
 
@@ -70,7 +70,7 @@ It listens on `http://127.0.0.1:8765` only. Routes:
 - `GET /api/status` — latest saved report
 - `POST /api/scan` — run a scan and save a JSON report
 
-Keep it on localhost. Do not expose this unauthenticated development API directly to the public internet.
+Keep it on localhost. This development API does not implement user authentication, rate limiting or TLS and must not be exposed directly to the public internet. The dashboard CORS setting is not a substitute for authentication.
 
 ### Connecting the public GitHub Pages UI
 
