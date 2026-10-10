@@ -23,7 +23,16 @@ def scan_folder(root):
     results = {}
     errors = []
 
+    excluded_dirs = {".git", "__pycache__"}
+    excluded_suffixes = {".pyc"}
+
     for path in sorted(root.rglob("*")):
+        relative_path = path.relative_to(root)
+
+        if any(part in excluded_dirs for part in relative_path.parts):
+            continue
+        if path.suffix in excluded_suffixes:
+            continue
         if path.is_symlink() or not path.is_file():
             continue
 
