@@ -1,91 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08111f">
-<title>Cyber Sentinel AI — Integrity Monitor</title>
+<meta name="description" content="Cyber Sentinel AI: defensive file-integrity monitoring, signed baselines, and explainable anomaly triage.">
+<title>Cyber Sentinel AI — Security Console</title>
 <style>
-:root{color-scheme:dark;--bg:#08111f;--panel:#101e30;--line:#263750;--text:#eaf2ff;--muted:#9baec5;--green:#54e6bd;--amber:#ffc76a;--red:#ff8585}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
-header{padding:20px max(5%,calc((100% - 1080px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
-.brand{font-weight:800;letter-spacing:1px;color:var(--green)}a{color:var(--green);text-decoration:none}
-main{max-width:1080px;margin:auto;padding:32px 18px}.eyebrow{color:var(--green);font-size:12px;letter-spacing:2px}
-h1{font-size:clamp(30px,6vw,48px);margin:10px 0}p{color:var(--muted);line-height:1.65}
-.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:19px}.panel{margin:17px 0}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:22px 0}
-.label{font-size:12px;color:var(--muted)}.value{font-size:25px;font-weight:750;margin:12px 0;overflow-wrap:anywhere}
-.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}
-button,input{font:inherit;border-radius:8px;padding:11px 13px}button{background:var(--green);color:#062019;border:0;font-weight:750;cursor:pointer;margin:5px 6px 5px 0}button:disabled{opacity:.6}
-input{width:100%;background:#07101d;border:1px solid var(--line);color:var(--text);margin:8px 0 12px}
-.command{background:#07101d;padding:12px;border-radius:8px;overflow-wrap:anywhere;color:#b9d9d6}
-table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line);font-size:13px;overflow-wrap:anywhere}th{color:var(--muted);font-size:11px}
-footer{text-align:center;padding:24px;border-top:1px solid var(--line);color:#8193aa;font-size:12px}
-.note{font-size:13px}.status{padding:12px;background:#07101d;border-radius:8px;overflow-wrap:anywhere}
-@media(max-width:500px){main{padding:25px 13px}.panel,.card{padding:14px}th,td{font-size:11px}}
+:root{color-scheme:dark;--bg:#07101c;--panel:#101d2d;--panel2:#0b1625;--line:#263a52;--text:#edf5ff;--muted:#9fb0c5;--mint:#61e7c1;--amber:#ffd17d;--red:#ff8c94;--blue:#91baff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#18334b 0,transparent 55%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Arial,sans-serif;line-height:1.5}
+a{color:var(--mint);text-decoration:none}a:hover{text-decoration:underline}
+header{position:sticky;top:0;z-index:5;backdrop-filter:blur(14px);background:#07101cdd;border-bottom:1px solid var(--line)}
+.nav{max-width:1120px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px}.brand{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:.08em;font-size:13px}.logo{display:grid;place-items:center;width:35px;height:35px;border-radius:11px;background:#143b3b;border:1px solid #2a7667;color:var(--mint);font-size:20px}
+.navlinks{display:flex;gap:16px;font-size:13px;color:var(--muted)}
+main{max-width:1120px;margin:auto;padding:34px 20px 54px}.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:22px;align-items:stretch}.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);font-weight:750}
+h1{font-size:clamp(32px,5.5vw,56px);letter-spacing:-.04em;line-height:1.05;margin:13px 0}h2{font-size:18px;letter-spacing:-.02em;margin:0 0 8px}h3{font-size:14px;margin:0 0 8px}p{color:var(--muted);margin:8px 0 14px}.lead{font-size:16px;max-width:680px;line-height:1.7}.muted{color:var(--muted)}.small{font-size:12px}.panel,.metric{border:1px solid var(--line);border-radius:17px;background:linear-gradient(150deg,#122236,#0d1928);padding:20px;min-width:0}.hero-aside{display:flex;flex-direction:column;justify-content:space-between;gap:18px}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:11px;color:var(--muted)}.dot{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block}.metric-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:20px 0}.metric{padding:16px}.metric-label{font-size:11px;color:var(--muted)}.metric-value{font-size:26px;font-weight:800;letter-spacing:-.03em;margin:8px 0;overflow-wrap:anywhere}.metric-foot{font-size:11px;color:var(--muted)}.mint{color:var(--mint)}.amber{color:var(--amber)}.red{color:var(--red)}.blue{color:var(--blue)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:12px}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}button,input{font:inherit;border-radius:10px;padding:11px 13px}button{border:1px solid #3b8778;background:var(--mint);color:#06201b;font-weight:800;cursor:pointer}button.secondary{background:#15283b;color:var(--text);border-color:var(--line)}button:disabled{opacity:.55;cursor:wait}input{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--text);margin:8px 0 10px;outline:none}input:focus{border-color:var(--mint);box-shadow:0 0 0 3px #61e7c122}.status-box{border:1px solid var(--line);background:var(--panel2);padding:12px 14px;border-radius:11px;color:var(--muted);font-size:13px;overflow-wrap:anywhere}.status-box.ok{border-color:#276653;color:var(--mint)}.status-box.warn{border-color:#80673b;color:var(--amber)}.status-box.bad{border-color:#80464b;color:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin-top:12px}table{width:100%;border-collapse:collapse;min-width:420px}th,td{text-align:left;padding:12px 13px;border-bottom:1px solid var(--line);font-size:12px;vertical-align:top;overflow-wrap:anywhere}th{font-size:10px;letter-spacing:.08em;color:var(--muted);background:#0b1725}tbody tr:last-child td{border-bottom:0}.tag{display:inline-block;padding:4px 7px;border-radius:7px;background:#192b40;color:var(--blue);font-size:10px;font-weight:800}.command{background:#07101c;border:1px solid var(--line);border-radius:10px;padding:11px 12px;color:#b9e8db;font:12px ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;margin:7px 0}.feature-list{display:grid;gap:11px}.feature{display:flex;gap:10px}.feature-icon{width:28px;height:28px;flex:none;display:grid;place-items:center;border-radius:9px;background:#14352f;color:var(--mint)}.feature p{font-size:12px;margin:2px 0 0}.feature strong{font-size:13px}.disclaimer{border-left:3px solid var(--amber);padding:9px 12px;background:#201d16;border-radius:0 9px 9px 0;font-size:12px;color:#e8d4aa}
+footer{border-top:1px solid var(--line);padding:22px;text-align:center;color:#8092a8;font-size:11px}
+@media(max-width:850px){.hero{grid-template-columns:1fr}.metric-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.two-col{grid-template-columns:1fr}.navlinks{gap:10px}}
+@media(max-width:520px){.nav{padding:12px 14px}.navlinks a:nth-child(2){display:none}main{padding:24px 13px 40px}.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.metric{padding:13px}.metric-value{font-size:23px}.panel{padding:15px}.section-head{display:block}.navlinks{font-size:11px}}
 </style>
 </head>
 <body>
-<header><div class="brand">⌁ CYBER SENTINEL AI</div><a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank" rel="noopener">View source ↗</a></header>
+<header><div class="nav"><div class="brand"><span class="logo">⌁</span><span>CYBER SENTINEL <span class="mint">AI</span></span></div><nav class="navlinks"><a href="#console">Console</a><a href="#architecture">Architecture</a><a href="#local">Run locally</a><a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank" rel="noopener">GitHub ↗</a></nav></div></header>
 <main>
-<div class="eyebrow">DEFENSIVE CYBERSECURITY · SHA-256</div>
-<h1>File integrity monitor<span class="green">.</span></h1>
-<p>Compare files with a trusted baseline, detect unexpected additions, modifications or deletions, and review explainable anomaly-triage findings from the backend.</p>
-<section class="panel">
-<h2>Connect to your API</h2>
-<p class="note">This GitHub Pages site is static. Live scans work only when you connect a separately hosted, secured HTTPS API. A Termux API at 127.0.0.1 is private to the device running it and cannot be reached by this public website.</p>
-<label for="apiUrl">Backend API base URL (example: https://your-api.example)</label>
-<input id="apiUrl" type="url" placeholder="Leave empty to use demo/disconnected mode" autocomplete="url">
-<button id="connectBtn">Connect / Refresh</button><button id="scanBtn">Run real scan</button>
-<div id="connection" class="status" role="status" aria-live="polite">Disconnected — no real scan has been run from this page.</div>
+<section class="hero">
+<div><div class="eyebrow">Defensive security · Local-first</div><h1>Know what changed.<br><span class="mint">Investigate with context.</span></h1><p class="lead">A file-integrity monitoring prototype for Termux and Python. Compare files against a trusted SHA-256 baseline, review unexpected changes, and use explainable anomaly triage to prioritize investigation.</p><div class="pill"><span class="dot"></span> Educational prototype · Not an antivirus</div></div>
+<aside class="panel hero-aside"><div><div class="eyebrow">SYSTEM OVERVIEW</div><h2 style="margin-top:10px">Integrity before inference</h2><p class="small">The integrity engine detects file changes. The anomaly layer helps prioritize them. Neither alone proves malicious activity.</p></div><div class="feature-list"><div class="feature"><span class="feature-icon">✓</span><div><strong>SHA-256 baseline</strong><p>Detect added, changed and missing files.</p></div></div><div class="feature"><span class="feature-icon">⌁</span><div><strong>HMAC signing</strong><p>Verify baseline authenticity when configured.</p></div></div><div class="feature"><span class="feature-icon">◎</span><div><strong>Anomaly triage</strong><p>Isolation Forest when available; heuristic fallback otherwise.</p></div></div></div></aside>
 </section>
-<section class="cards">
-<div class="card"><div class="label">Scan Status</div><div class="value amber" id="status">DISCONNECTED</div><div class="label" id="timestamp">No live report loaded</div></div>
-<div class="card"><div class="label">Files Added</div><div class="value" id="added">—</div></div>
-<div class="card"><div class="label">Files Changed</div><div class="value" id="changed">—</div></div>
-<div class="card"><div class="label">Files Missing</div><div class="value" id="missing">—</div></div>
-<div class="card"><div class="label">AI Anomalies</div><div class="value" id="anomalies">—</div><div class="label" id="aiEngine">No model result</div></div>
+<section id="console" class="panel" style="margin-top:20px">
+<div class="section-head"><div><div class="eyebrow">LIVE CONSOLE</div><h2 style="margin-top:7px">Connect your backend</h2><p class="small">This page is static. A local Termux API is reachable only from the same device; a public website cannot connect to it automatically.</p></div><span class="pill"><span class="dot"></span> No live data until connected</span></div>
+<label for="apiUrl" class="small">Secured backend base URL</label><input id="apiUrl" type="url" placeholder="https://your-secured-api.example" autocomplete="url">
+<div class="actions"><button id="connectBtn">Connect / refresh</button><button class="secondary" id="scanBtn">Run scan</button><button class="secondary" id="clearBtn">Clear URL</button></div>
+<div id="connection" class="status-box" role="status" aria-live="polite">Disconnected — no live scan has been run from this page.</div>
 </section>
-<section class="panel">
-<h2>Latest scan details</h2><p id="reportSummary">Connect a secured backend to display real report data. No sample findings are presented as real.</p>
-<table><thead><tr><th>CHANGE TYPE</th><th>FILE</th></tr></thead><tbody id="fileRows"><tr><td colspan="2">No live report loaded.</td></tr></tbody></table>
+<section class="metric-grid" aria-label="Latest scan metrics">
+<div class="metric"><div class="metric-label">INTEGRITY STATUS</div><div class="metric-value amber" id="status">OFFLINE</div><div class="metric-foot" id="timestamp">No live report loaded</div></div>
+<div class="metric"><div class="metric-label">FILES ADDED</div><div class="metric-value" id="added">—</div><div class="metric-foot">New paths</div></div>
+<div class="metric"><div class="metric-label">FILES CHANGED</div><div class="metric-value" id="changed">—</div><div class="metric-foot">Hash mismatch</div></div>
+<div class="metric"><div class="metric-label">FILES MISSING</div><div class="metric-value" id="missing">—</div><div class="metric-foot">Previously recorded</div></div>
+<div class="metric"><div class="metric-label">ANOMALIES FLAGGED</div><div class="metric-value" id="anomalies">—</div><div class="metric-foot" id="aiEngine">No model result</div></div>
 </section>
-<section class="panel">
-<h2>Run locally in Termux</h2>
-<p>In your project folder, create a baseline from a trusted state, then run a check:</p>
-<div class="command">cd ~/cyber-sentinel-ai</div><div class="command">python integrity.py baseline ~/cyber-sentinel-ai</div><div class="command">python integrity.py check ~/cyber-sentinel-ai</div>
-<p class="note">Continuous monitoring: <code>python monitor.py ~/cyber-sentinel-ai --interval 10</code></p>
-<p class="note"><span class="green">Exit 0:</span> clean · <span class="amber">Exit 1:</span> changes detected · <span class="red">Exit 2:</span> operational error/incomplete scan.</p>
+<section class="two-col">
+<div class="panel"><div class="section-head"><div><div class="eyebrow">OBSERVABILITY</div><h2 style="margin-top:7px">Latest report</h2></div><span class="tag" id="reportStatus">WAITING</span></div><p id="reportSummary" class="small">Connect a secured backend to display real report data. No sample findings are represented as live results.</p><div class="table-wrap"><table><thead><tr><th>CHANGE TYPE</th><th>PATH / DETAILS</th></tr></thead><tbody id="fileRows"><tr><td colspan="2">No live report loaded.</td></tr></tbody></table></div></div>
+<div class="panel"><div class="eyebrow">CAPABILITIES</div><h2 style="margin-top:7px">Built for investigation</h2><div class="feature-list" style="margin-top:17px"><div class="feature"><span class="feature-icon">01</span><div><strong>Baseline comparison</strong><p>SHA-256 digests identify content changes relative to a trusted inventory.</p></div></div><div class="feature"><span class="feature-icon">02</span><div><strong>Signed baseline validation</strong><p>HMAC-SHA256 can detect baseline tampering when the secret key is protected.</p></div></div><div class="feature"><span class="feature-icon">03</span><div><strong>Explainable triage</strong><p>Findings include file metadata signals and reasons for human review.</p></div></div><div class="feature"><span class="feature-icon">04</span><div><strong>JSON reports</strong><p>Reports support debugging, demos and audit workflows.</p></div></div></div></div>
 </section>
-<p class="note">Educational prototype, not an antivirus. A file change is not proof of an attack. Never expose the unauthenticated development API to the public internet.</p>
+<section id="architecture" class="panel" style="margin-top:16px"><div class="eyebrow">ARCHITECTURE</div><h2 style="margin-top:7px">A simple, auditable pipeline</h2><div class="two-col" style="margin-top:14px"><div><div class="command">Target folder → SHA-256 scan → Baseline comparison</div><div class="command">Change events → Anomaly triage → JSON report</div><div class="command">Monitor / Local API → Console and dashboard</div></div><div class="disclaimer">Anomaly scores prioritize review; they do not prove a file is malicious. The optional ML path uses Isolation Forest only when the dependency is installed and enough reference files and events are available.</div></div></section>
+<section id="local" class="panel" style="margin-top:16px"><div class="eyebrow">LOCAL WORKFLOW</div><h2 style="margin-top:7px">Run in Termux</h2><p class="small">Use a trusted project folder and keep the HMAC key outside Git. If a baseline already exists, do not overwrite it just to make a scan pass.</p><div class="command">cd ~/cyber-sentinel-ai</div><div class="command">python integrity.py check ~/cyber-sentinel-ai</div><div class="command">python -m unittest discover -s tests -v</div><p class="small">API routes: <code>GET /api/status</code> · <code>POST /api/scan</code>. The development API must remain on localhost; do not expose it directly to the public internet.</p><p class="small"><a href="https://github.com/viRAJ357/Cyber_sentinal_ai/blob/upgrade/production-ai-hardening/README.md" target="_blank" rel="noopener">Read the full setup and security guide ↗</a></p></section>
+<div class="disclaimer">Security note: this educational prototype is not an antivirus, EDR, or security certification. Use only on systems you own or are authorized to audit. Do not expose the unauthenticated development API publicly.</div>
 </main>
-<footer>CYBER SENTINEL AI · Open-source educational project</footer>
+<footer>CYBER SENTINEL AI · Open-source educational project · Local-first defensive tooling</footer>
 <script>
 const el=id=>document.getElementById(id);
 function apiBase(){return el("apiUrl").value.trim().replace(/\/+$/,"");}
-function setMessage(message){el("connection").textContent=message;}
+function setMessage(message,kind=""){el("connection").textContent=message;el("connection").className="status-box "+kind;}
 function showReport(data){
- el("status").textContent=data.status||"UNKNOWN";
- el("status").className="value "+(data.status==="CLEAN"?"green":data.status==="CHANGES_DETECTED"||data.status==="INCOMPLETE"?"amber":"red");
+ const status=data.status||"UNKNOWN";el("status").textContent=status;el("reportStatus").textContent=status;
+ const statusClass=status==="CLEAN"?"mint":status==="CHANGES_DETECTED"||status==="INCOMPLETE"?"amber":"red";
+ el("status").className="metric-value "+statusClass;
  el("timestamp").textContent=data.timestamp||"No timestamp";
- const s=data.summary||{};
- el("added").textContent=s.added??"—";el("changed").textContent=s.changed??"—";el("missing").textContent=s.missing??"—";
- const ai=data.anomaly_detection||{};el("anomalies").textContent=ai.anomaly_count??"—";el("aiEngine").textContent=ai.engine||"No model result";
- el("reportSummary").textContent=data.message||("Folder: "+(data.folder||"unknown")+" · Scan errors: "+(s.scan_errors??(data.scan_errors||[]).length));
- const rows=[];
- for(const type of ["added","changed","missing"]){for(const file of (data[type]||[])){rows.push([type.toUpperCase(),file]);}}
- for(const finding of (ai.findings||[])){if(finding.anomaly){rows.push(["AI TRIAGE",finding.path+" — score "+finding.score+" — "+(finding.reasons||[]).join(", ")]);}}
+ const s=data.summary||{};el("added").textContent=s.added??"—";el("changed").textContent=s.changed??"—";el("missing").textContent=s.missing??"—";
+ const ai=data.anomaly_detection||{};el("anomalies").textContent=ai.anomaly_count??"—";el("aiEngine").textContent=(ai.engine||"No model result")+(ai.trained_on_files!==undefined?" · reference files: "+ai.trained_on_files:"");
+ el("reportSummary").textContent=data.message||("Folder: "+(data.folder||"unknown")+" · Scan errors: "+(s.scan_errors??(data.scan_errors||[]).length)+" · Engine: "+(ai.engine||"not reported"));
+ const rows=[];for(const type of ["added","changed","missing"]){for(const file of (data[type]||[]))rows.push([type.toUpperCase(),file]);}
+ for(const finding of (ai.findings||[])){if(finding.anomaly)rows.push(["ANOMALY",finding.path+" — score "+finding.score+" — "+(finding.reasons||[]).join(", ")]);}
  el("fileRows").replaceChildren();
- if(!rows.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=2;td.textContent="No file changes listed.";tr.append(td);el("fileRows").append(tr);}
+ if(!rows.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=2;td.textContent="No file changes or flagged anomalies in this report.";tr.append(td);el("fileRows").append(tr);}
  for(const [type,file] of rows){const tr=document.createElement("tr"),a=document.createElement("td"),b=document.createElement("td");a.textContent=type;b.textContent=file;tr.append(a,b);el("fileRows").append(tr);}
 }
 async function request(path,method="GET"){
- const base=apiBase();if(!base)throw new Error("Enter the HTTPS URL of your secured backend first.");
- const url=new URL(base);if(url.protocol!=="https:"&&url.hostname!=="localhost"&&url.hostname!=="127.0.0.1")throw new Error("Use HTTPS for remote API URLs.");
+ const base=apiBase();if(!base)throw new Error("Enter the URL of your secured backend first.");
+ const url=new URL(base);if(url.protocol!=="https:"&&url.hostname!=="localhost"&&url.hostname!=="127.0.0.1")throw new Error("Remote API URLs must use HTTPS.");
  const response=await fetch(base+path,{method,headers:method==="POST"?{"Content-Type":"application/json"}:undefined,body:method==="POST"?"{}":undefined,cache:"no-store"});
- if(!response.ok)throw new Error("API returned HTTP "+response.status);
- return response.json();
+ if(!response.ok)throw new Error("API returned HTTP "+response.status);return response.json();
 }
-el("connectBtn").addEventListener("click",async()=>{el("connectBtn").disabled=true;setMessage("Connecting…");try{const data=await request("/api/status");showReport(data);setMessage("Connected — latest report loaded from backend.");}catch(e){setMessage("Not connected: "+e.message+" Check backend URL, HTTPS, CORS and server availability.");}finally{el("connectBtn").disabled=false;}});
-el("scanBtn").addEventListener("click",async()=>{el("scanBtn").disabled=true;setMessage("Requesting scan…");try{const data=await request("/api/scan","POST");showReport(data);setMessage("Scan response received from backend.");}catch(e){setMessage("Scan failed: "+e.message+" A backend must be deployed and secured first.");}finally{el("scanBtn").disabled=false;}});
+el("connectBtn").addEventListener("click",async()=>{el("connectBtn").disabled=true;setMessage("Connecting to backend…");try{showReport(await request("/api/status"));setMessage("Connected — latest report loaded from backend.","ok");}catch(e){setMessage("Not connected: "+e.message+" Check URL, HTTPS, CORS and server availability.","warn");}finally{el("connectBtn").disabled=false;}});
+el("scanBtn").addEventListener("click",async()=>{el("scanBtn").disabled=true;setMessage("Requesting a scan…");try{showReport(await request("/api/scan","POST"));setMessage("Scan response received from backend.","ok");}catch(e){setMessage("Scan failed: "+e.message+" A secured backend must be running first.","warn");}finally{el("scanBtn").disabled=false;}});
+el("clearBtn").addEventListener("click",()=>{el("apiUrl").value="";setMessage("Backend URL cleared. This page is disconnected from live scan data.");});
 </script>
-</body></html>
+</body>
+</html>
