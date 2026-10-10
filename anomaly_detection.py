@@ -7,7 +7,6 @@ This is a triage aid, not proof that a file is malicious.
 from collections import Counter
 from pathlib import Path
 import math
-import re
 
 SUSPICIOUS_TERMS = ("payload", "credential", "keylog", "ransom", "stealer", "backdoor", "webshell")
 EXECUTABLE_SUFFIXES = {".sh", ".bash", ".py", ".pyc", ".so", ".dll", ".exe", ".bat", ".ps1", ".apk"}
@@ -58,7 +57,6 @@ def score_events(root, baseline_files, current_files, changes):
     affected = set(changes.get("added", [])) | set(changes.get("changed", [])) | set(changes.get("missing", []))
     reference_names = sorted(set(baseline_files) & set(current_files) - affected)
     event_names = [(name, kind) for kind in ("added", "changed", "missing") for name in changes.get(kind, [])]
-    all_names = reference_names + [name for name, _ in event_names]
     extension_counts = Counter(Path(name).suffix.lower() for name in reference_names)
     total_extensions = max(len(reference_names), 1)
 
