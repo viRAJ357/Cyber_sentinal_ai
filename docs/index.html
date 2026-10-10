@@ -1,84 +1,88 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cyber Sentinel AI</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08111f">
+<title>Cyber Sentinel AI — Integrity Monitor</title>
 <style>
-*{box-sizing:border-box}
-body{margin:0;background:#08111f;color:#eaf2ff;font-family:Arial,sans-serif}
-header{padding:22px 7%;border-bottom:1px solid #24334a;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{font-weight:800;letter-spacing:1px;color:#54e6bd}
-a{color:#54e6bd;text-decoration:none}
-main{max-width:1100px;margin:auto;padding:38px 20px}
-.eyebrow{color:#54e6bd;font-size:12px;letter-spacing:2px}
-h1{font-size:clamp(30px,6vw,48px);margin:12px 0}
-p{color:#a2b2c8;line-height:1.7}
-button{background:#54e6bd;border:0;padding:12px 17px;border-radius:8px;font-weight:bold;cursor:pointer}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:28px 0}
-.card,.panel{background:#101e30;border:1px solid #263750;border-radius:13px;padding:20px}
-.label{font-size:12px;color:#9baec5}
-.value{font-size:28px;font-weight:bold;margin:14px 0}
-.green{color:#54e6bd}.yellow{color:#ffc76a}
-.panel{margin:18px 0}
-table{width:100%;border-collapse:collapse;margin-top:15px}
-th,td{text-align:left;padding:13px 8px;border-bottom:1px solid #263750;font-size:13px}
-th{color:#8da2bb;font-size:11px}
-.tag{color:#54e6bd;background:#153b36;padding:5px 8px;border-radius:5px;font-size:11px}
-.command{background:#07101d;padding:14px;border-radius:8px;overflow-wrap:anywhere;color:#b9d9d6;margin:10px 0}
-footer{padding:25px;text-align:center;color:#8193aa;border-top:1px solid #24334a;font-size:12px}
-@media(max-width:500px){header{padding:18px 5%}main{padding:28px 15px}.card,.panel{padding:15px}th,td{font-size:11px}}
+:root{color-scheme:dark;--bg:#08111f;--panel:#101e30;--line:#263750;--text:#eaf2ff;--muted:#9baec5;--green:#54e6bd;--amber:#ffc76a;--red:#ff8585}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Arial,sans-serif}
+header{padding:20px max(5%,calc((100% - 1080px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+.brand{font-weight:800;letter-spacing:1px;color:var(--green)}a{color:var(--green);text-decoration:none}
+main{max-width:1080px;margin:auto;padding:32px 18px}.eyebrow{color:var(--green);font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(30px,6vw,48px);margin:10px 0}p{color:var(--muted);line-height:1.65}
+.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:19px}.panel{margin:17px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:12px;margin:22px 0}
+.label{font-size:12px;color:var(--muted)}.value{font-size:25px;font-weight:750;margin:12px 0;overflow-wrap:anywhere}
+.green{color:var(--green)}.amber{color:var(--amber)}.red{color:var(--red)}
+button,input{font:inherit;border-radius:8px;padding:11px 13px}button{background:var(--green);color:#062019;border:0;font-weight:750;cursor:pointer;margin:5px 6px 5px 0}button:disabled{opacity:.6}
+input{width:100%;background:#07101d;border:1px solid var(--line);color:var(--text);margin:8px 0 12px}
+.command{background:#07101d;padding:12px;border-radius:8px;overflow-wrap:anywhere;color:#b9d9d6}
+table{width:100%;border-collapse:collapse;margin-top:14px}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line);font-size:13px;overflow-wrap:anywhere}th{color:var(--muted);font-size:11px}
+footer{text-align:center;padding:24px;border-top:1px solid var(--line);color:#8193aa;font-size:12px}
+.note{font-size:13px}.status{padding:12px;background:#07101d;border-radius:8px;overflow-wrap:anywhere}
+@media(max-width:500px){main{padding:25px 13px}.panel,.card{padding:14px}th,td{font-size:11px}}
 </style>
 </head>
 <body>
-<header>
-  <div class="brand">⌁ CYBER SENTINEL AI</div>
-  <a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank">GitHub ↗</a>
-</header>
+<header><div class="brand">⌁ CYBER SENTINEL AI</div><a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank" rel="noopener">View source ↗</a></header>
 <main>
-  <div class="eyebrow">FILE INTEGRITY MONITORING</div>
-  <h1>Security at a glance<span class="green">.</span></h1>
-  <p>Monitor file changes, compare SHA-256 hashes and review integrity reports with Cyber Sentinel AI.</p>
-  <p><a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank"><button>View Source Code ↗</button></a></p>
-
-  <section class="cards">
-    <div class="card"><div class="label">Scan Status</div><div class="value yellow" id="status">Demo</div><div class="label">Sample data only</div></div>
-    <div class="card"><div class="label">Files Added</div><div class="value">4</div><div class="label">Example result</div></div>
-    <div class="card"><div class="label">Files Changed</div><div class="value">1</div><div class="label">Example result</div></div>
-    <div class="card"><div class="label">Files Missing</div><div class="value green">0</div><div class="label">Example result</div></div>
-  </section>
-
-  <section class="panel">
-    <h2>Recent Scan Report</h2>
-    <p>This preview is based on an earlier scan. It is not connected to your Termux scanner.</p>
-    <table>
-      <thead><tr><th>FILE</th><th>RESULT</th></tr></thead>
-      <tbody>
-        <tr><td>README.md</td><td><span class="tag">ADDED</span></td></tr>
-        <tr><td>tests/test_integrity.py</td><td><span class="tag">ADDED</span></td></tr>
-        <tr><td>integrity.py</td><td><span class="tag" style="color:#ffc76a">CHANGED</span></td></tr>
-      </tbody>
-    </table>
-    <p><button id="demo">Try Demo Scan</button></p>
-    <p id="message">Demo only — no real files are scanned by this page.</p>
-  </section>
-
-  <section class="panel">
-    <h2>Run a real scan in Termux</h2>
-    <p>Run these commands in your Termux terminal:</p>
-    <div class="command">cd ~/cyber-sentinel-ai</div>
-    <div class="command">python integrity.py check ~/cyber-sentinel-ai</div>
-    <p><span class="green">Exit 0:</span> Clean &nbsp; <span class="yellow">Exit 1:</span> Changes detected &nbsp; Exit 2: Error</p>
-  </section>
-  <p>Built for learning and authorized file-integrity audits.</p>
+<div class="eyebrow">DEFENSIVE CYBERSECURITY · SHA-256</div>
+<h1>File integrity monitor<span class="green">.</span></h1>
+<p>Compare files with a trusted baseline, detect unexpected additions, modifications or deletions, and review JSON scan reports.</p>
+<section class="panel">
+<h2>Connect to your API</h2>
+<p class="note">This GitHub Pages site is static. Live scans work only when you connect a separately hosted, secured HTTPS API. A Termux API at 127.0.0.1 is private to the device running it and cannot be reached by this public website.</p>
+<label for="apiUrl">Backend API base URL (example: https://your-api.example)</label>
+<input id="apiUrl" type="url" placeholder="Leave empty to use demo/disconnected mode" autocomplete="url">
+<button id="connectBtn">Connect / Refresh</button><button id="scanBtn">Run real scan</button>
+<div id="connection" class="status" role="status" aria-live="polite">Disconnected — no real scan has been run from this page.</div>
+</section>
+<section class="cards">
+<div class="card"><div class="label">Scan Status</div><div class="value amber" id="status">DISCONNECTED</div><div class="label" id="timestamp">No live report loaded</div></div>
+<div class="card"><div class="label">Files Added</div><div class="value" id="added">—</div></div>
+<div class="card"><div class="label">Files Changed</div><div class="value" id="changed">—</div></div>
+<div class="card"><div class="label">Files Missing</div><div class="value" id="missing">—</div></div>
+</section>
+<section class="panel">
+<h2>Latest scan details</h2><p id="reportSummary">Connect a secured backend to display real report data. No sample findings are presented as real.</p>
+<table><thead><tr><th>CHANGE TYPE</th><th>FILE</th></tr></thead><tbody id="fileRows"><tr><td colspan="2">No live report loaded.</td></tr></tbody></table>
+</section>
+<section class="panel">
+<h2>Run locally in Termux</h2>
+<p>In your project folder, create a baseline from a trusted state, then run a check:</p>
+<div class="command">cd ~/cyber-sentinel-ai</div><div class="command">python integrity.py baseline ~/cyber-sentinel-ai</div><div class="command">python integrity.py check ~/cyber-sentinel-ai</div>
+<p class="note">Continuous monitoring: <code>python monitor.py ~/cyber-sentinel-ai --interval 10</code></p>
+<p class="note"><span class="green">Exit 0:</span> clean · <span class="amber">Exit 1:</span> changes detected · <span class="red">Exit 2:</span> operational error/incomplete scan.</p>
+</section>
+<p class="note">Educational prototype, not an antivirus. A file change is not proof of an attack. Never expose the unauthenticated development API to the public internet.</p>
 </main>
-<footer>CYBER SENTINEL AI · Open-source project</footer>
+<footer>CYBER SENTINEL AI · Open-source educational project</footer>
 <script>
-document.getElementById("demo").addEventListener("click",function(){
-  document.getElementById("status").textContent="Demo Complete";
-  document.getElementById("message").textContent="Demo finished. These are sample results, not a real device scan.";
-});
+const el=id=>document.getElementById(id);
+function apiBase(){return el("apiUrl").value.trim().replace(/\/+$/,"");}
+function setMessage(message){el("connection").textContent=message;}
+function showReport(data){
+ el("status").textContent=data.status||"UNKNOWN";
+ el("status").className="value "+(data.status==="CLEAN"?"green":data.status==="CHANGES_DETECTED"||data.status==="INCOMPLETE"?"amber":"red");
+ el("timestamp").textContent=data.timestamp||"No timestamp";
+ const s=data.summary||{};
+ el("added").textContent=s.added??"—";el("changed").textContent=s.changed??"—";el("missing").textContent=s.missing??"—";
+ el("reportSummary").textContent=data.message||("Folder: "+(data.folder||"unknown")+" · Scan errors: "+(s.scan_errors??(data.scan_errors||[]).length));
+ const rows=[];
+ for(const type of ["added","changed","missing"]){for(const file of (data[type]||[])){rows.push([type.toUpperCase(),file]);}}
+ el("fileRows").replaceChildren();
+ if(!rows.length){const tr=document.createElement("tr"),td=document.createElement("td");td.colSpan=2;td.textContent="No file changes listed.";tr.append(td);el("fileRows").append(tr);}
+ for(const [type,file] of rows){const tr=document.createElement("tr"),a=document.createElement("td"),b=document.createElement("td");a.textContent=type;b.textContent=file;tr.append(a,b);el("fileRows").append(tr);}
+}
+async function request(path,method="GET"){
+ const base=apiBase();if(!base)throw new Error("Enter the HTTPS URL of your secured backend first.");
+ const url=new URL(base);if(url.protocol!=="https:"&&url.hostname!=="localhost"&&url.hostname!=="127.0.0.1")throw new Error("Use HTTPS for remote API URLs.");
+ const response=await fetch(base+path,{method,headers:method==="POST"?{"Content-Type":"application/json"}:undefined,body:method==="POST"?"{}":undefined,cache:"no-store"});
+ if(!response.ok)throw new Error("API returned HTTP "+response.status);
+ return response.json();
+}
+el("connectBtn").addEventListener("click",async()=>{el("connectBtn").disabled=true;setMessage("Connecting…");try{const data=await request("/api/status");showReport(data);setMessage("Connected — latest report loaded from backend.");}catch(e){setMessage("Not connected: "+e.message+" Check backend URL, HTTPS, CORS and server availability.");}finally{el("connectBtn").disabled=false;}});
+el("scanBtn").addEventListener("click",async()=>{el("scanBtn").disabled=true;setMessage("Requesting scan…");try{const data=await request("/api/scan","POST");showReport(data);setMessage("Scan response received from backend.");}catch(e){setMessage("Scan failed: "+e.message+" A backend must be deployed and secured first.");}finally{el("scanBtn").disabled=false;}});
 </script>
-</body>
-</html>
+</body></html>
