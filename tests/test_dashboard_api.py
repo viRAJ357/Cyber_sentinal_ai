@@ -29,11 +29,17 @@ class DashboardApiTests(unittest.TestCase):
             baseline_path = state / "baseline.json"
             reports_path = state / "reports"
             # Keep a clean reference entry; the added suspicious path should be surfaced.
-            baseline_path.write_text(json.dumps({
+            baseline_data = {
                 "root": str(root),
                 "created_at": "2026-01-01T00:00:00+00:00",
                 "files": {"normal.txt": __import__("hashlib").sha256(b"normal").hexdigest()},
-            }))
+            }
+            key = __import__("os").environ.get("CYBER_SENTINEL_BASELINE_KEY")
+            if key:
+                baseline_data["hmac_sha256"] = integrity._baseline_signature(
+                    baseline_data, key
+                )
+            baseline_path.write_text(json.dumps(baseline_data))
             with patch.object(dashboard_api, "TARGET", root), \
                  patch.object(dashboard_api, "BASELINE", baseline_path), \
                  patch.object(dashboard_api, "REPORTS", reports_path), \
