@@ -122,6 +122,22 @@ python -m pip install -r requirements-ml.txt
 
 On Termux/Android, scikit-learn may not have compatible wheels for every Python version. If installation fails, use the fallback or run the optional model on a supported desktop/Linux environment. The model is a triage aid, not a trained malware classifier; scores can produce false positives and must be reviewed.
 
+### Reproducible synthetic evaluation
+
+Run a small labeled benchmark and export its results as JSON:
+
+```sh
+python evaluate_anomaly_detection.py --output ml_evaluation_report.json
+```
+
+The report compares the optional Isolation Forest path (when available) with the deterministic heuristic baseline. It includes precision, recall, F1-score, accuracy, confusion-matrix counts, and per-event predictions. To run the evaluation-metric unit tests with the full suite:
+
+```sh
+python -m unittest discover -s tests -v
+```
+
+The benchmark is deliberately synthetic and labels examples from their filenames. It is useful for checking the evaluation pipeline and demonstrating reproducibility, but it is **not** a representative malware dataset and must not be presented as real-world detection performance.
+
 ### Synthetic ML smoke test
 
 A synthetic smoke test was run in Google Colab and reported:
