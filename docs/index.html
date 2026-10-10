@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cyber Sentinel AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#08111f;color:#eaf2ff;font-family:Arial,sans-serif}
+header{padding:22px 7%;border-bottom:1px solid #24334a;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{font-weight:800;letter-spacing:1px;color:#54e6bd}
+a{color:#54e6bd;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:38px 20px}
+.eyebrow{color:#54e6bd;font-size:12px;letter-spacing:2px}
+h1{font-size:clamp(30px,6vw,48px);margin:12px 0}
+p{color:#a2b2c8;line-height:1.7}
+button{background:#54e6bd;border:0;padding:12px 17px;border-radius:8px;font-weight:bold;cursor:pointer}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:28px 0}
+.card,.panel{background:#101e30;border:1px solid #263750;border-radius:13px;padding:20px}
+.label{font-size:12px;color:#9baec5}
+.value{font-size:28px;font-weight:bold;margin:14px 0}
+.green{color:#54e6bd}.yellow{color:#ffc76a}
+.panel{margin:18px 0}
+table{width:100%;border-collapse:collapse;margin-top:15px}
+th,td{text-align:left;padding:13px 8px;border-bottom:1px solid #263750;font-size:13px}
+th{color:#8da2bb;font-size:11px}
+.tag{color:#54e6bd;background:#153b36;padding:5px 8px;border-radius:5px;font-size:11px}
+.command{background:#07101d;padding:14px;border-radius:8px;overflow-wrap:anywhere;color:#b9d9d6;margin:10px 0}
+footer{padding:25px;text-align:center;color:#8193aa;border-top:1px solid #24334a;font-size:12px}
+@media(max-width:500px){header{padding:18px 5%}main{padding:28px 15px}.card,.panel{padding:15px}th,td{font-size:11px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">⌁ CYBER SENTINEL AI</div>
+  <a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank">GitHub ↗</a>
+</header>
+<main>
+  <div class="eyebrow">FILE INTEGRITY MONITORING</div>
+  <h1>Security at a glance<span class="green">.</span></h1>
+  <p>Monitor file changes, compare SHA-256 hashes and review integrity reports with Cyber Sentinel AI.</p>
+  <p><a href="https://github.com/viRAJ357/Cyber_sentinal_ai" target="_blank"><button>View Source Code ↗</button></a></p>
+
+  <section class="cards">
+    <div class="card"><div class="label">Scan Status</div><div class="value yellow" id="status">Demo</div><div class="label">Sample data only</div></div>
+    <div class="card"><div class="label">Files Added</div><div class="value">4</div><div class="label">Example result</div></div>
+    <div class="card"><div class="label">Files Changed</div><div class="value">1</div><div class="label">Example result</div></div>
+    <div class="card"><div class="label">Files Missing</div><div class="value green">0</div><div class="label">Example result</div></div>
+  </section>
+
+  <section class="panel">
+    <h2>Recent Scan Report</h2>
+    <p>This preview is based on an earlier scan. It is not connected to your Termux scanner.</p>
+    <table>
+      <thead><tr><th>FILE</th><th>RESULT</th></tr></thead>
+      <tbody>
+        <tr><td>README.md</td><td><span class="tag">ADDED</span></td></tr>
+        <tr><td>tests/test_integrity.py</td><td><span class="tag">ADDED</span></td></tr>
+        <tr><td>integrity.py</td><td><span class="tag" style="color:#ffc76a">CHANGED</span></td></tr>
+      </tbody>
+    </table>
+    <p><button id="demo">Try Demo Scan</button></p>
+    <p id="message">Demo only — no real files are scanned by this page.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Run a real scan in Termux</h2>
+    <p>Run these commands in your Termux terminal:</p>
+    <div class="command">cd ~/cyber-sentinel-ai</div>
+    <div class="command">python integrity.py check ~/cyber-sentinel-ai</div>
+    <p><span class="green">Exit 0:</span> Clean &nbsp; <span class="yellow">Exit 1:</span> Changes detected &nbsp; Exit 2: Error</p>
+  </section>
+  <p>Built for learning and authorized file-integrity audits.</p>
+</main>
+<footer>CYBER SENTINEL AI · Open-source project</footer>
+<script>
+document.getElementById("demo").addEventListener("click",function(){
+  document.getElementById("status").textContent="Demo Complete";
+  document.getElementById("message").textContent="Demo finished. These are sample results, not a real device scan.";
+});
+</script>
+</body>
+</html>
