@@ -1,6 +1,8 @@
 import argparse
 import hashlib
+import hmac
 import json
+import os
 import sys
 from pathlib import Path
 from datetime import datetime, timezone
@@ -54,6 +56,13 @@ def save_report(report):
     print("JSON report saved:", output)
 
 
+def _baseline_signature(data, key):
+    """HMAC-sign canonical baseline JSON, excluding the signature field."""
+    unsigned = {name: value for name, value in data.items() if name != "hmac_sha256"}
+    canonical = json.dumps(unsigned, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hmac.new(key.encode("utf-8"), canonical, hashlib.sha256).hexdigest()
+
+
 def load_baseline(root):
     try:
         data = json.loads(BASELINE.read_text(encoding="utf-8"))
@@ -77,6 +86,19 @@ def load_baseline(root):
             raise ValueError("Baseline contains invalid file entries")
         if len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
             raise ValueError("Baseline contains an invalid SHA-256 hash")
+
+    key = os.environ.get("CYBER_SENTINEL_BASELINE_KEY")
+    has_signature = "hmac_sha256" in data
+    signature = data.get("hmac_sha256")
+    if key and not has_signature:
+        raise ValueError("A signing key is configured but the baseline is unsigned")
+    if has_signature and not key:
+        raise ValueError("Signed baseline requires CYBER_SENTINEL_BASELINE_KEY")
+    if has_signature:
+        if not isinstance(signature, str) or not hmac.compare_digest(
+            signature, _baseline_signature(data, key)
+        ):
+            raise ValueError("Baseline signature verification failed")
 
     return data
 
@@ -119,6 +141,9 @@ def main():
 
         STATE.mkdir(parents=True, exist_ok=True)
         data = {"root": str(root), "created_at": now, "files": files}
+        key = os.environ.get("CYBER_SENTINEL_BASELINE_KEY")
+        if key:
+            data["hmac_sha256"] = _baseline_signature(data, key)
         temp = BASELINE.with_suffix(".tmp")
         temp.write_text(json.dumps(data, indent=2), encoding="utf-8")
         temp.replace(BASELINE)
